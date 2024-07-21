@@ -36,3 +36,13 @@ def calculate_accuracy_and_loss(loader: torch.utils.data.DataLoader,model: torch
     return acc,avgloss
 
 
+def save_best_model(model, accuracy, epoch, best_accuracy, save_path):
+    if accuracy > best_accuracy:
+        print(f"New best model found with accuracy: {accuracy:.4f}. Saving model...")
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': model.state_dict(),
+            'accuracy': accuracy,
+        }, save_path)
+        return accuracy
+    return best_accuracy
