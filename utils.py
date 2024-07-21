@@ -1,6 +1,7 @@
 from torchvision import transforms
 import torch
 import torch.nn.functional as F
+from tqdm import tqdm
 
 train_transforms = transforms.Compose(
     [
@@ -28,7 +29,7 @@ def calculate_accuracy_and_loss(
 
     with torch.inference_mode():
         running_loss = 0
-        for x, y in loader:
+        for x, y in tqdm(loader):
             x, y = x.to(device), y.to(device)
             logits = model(x)
             loss = F.cross_entropy(logits, y)
